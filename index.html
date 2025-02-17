@@ -97,8 +97,8 @@
             // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
 
-            // Correct API URL with prompt as input
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
+            // Use CORS Proxy to bypass the CORS issue
+            const apiUrl = `https://cors-anywhere.herokuapp.com/https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
 
             try {
                 // Fetch the response from the API
