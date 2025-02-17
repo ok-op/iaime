@@ -16,16 +16,23 @@
             height: 100vh;
             flex-direction: column;
         }
+        header {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+        }
         .container {
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 90%;
-            max-width: 300px;
+            max-width: 400px;
         }
         input[type="text"], select {
-            width: 90%;
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
@@ -120,8 +127,11 @@
 </head>
 <body>
 
-    <div class="container">
+    <header>
         <h1>AI Image Generator</h1>
+    </header>
+
+    <div class="container">
         <form id="image-form">
             <label for="prompt">Enter your prompt:</label>
             <input type="text" id="prompt" name="prompt" placeholder="e.g., A hyper-realistic portrait of a woman" required>
