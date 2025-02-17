@@ -74,7 +74,6 @@
         <select id="modelSelect">
             <option value="stabilityai/stable-diffusion-2-1">Stable Diffusion 2.1</option>
             <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
-            <!-- Add more models here if needed -->
         </select>
         <button onclick="generateImage()">Generate Image</button>
 
@@ -106,10 +105,11 @@
                     throw new Error('Failed to fetch image');
                 }
 
-                // Assuming the API returns an image URL in the response
+                // Log the response to check the structure
                 const data = await response.json();
+                console.log(data); // Debugging line
 
-                // Check if the API returned a valid image URL
+                // Assuming the API returns an image URL in the response
                 if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
