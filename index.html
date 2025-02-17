@@ -207,8 +207,13 @@
                     throw new Error('Image generation failed');
                 }
 
-                const imageBlob = await response.blob();
-                const imageUrl = URL.createObjectURL(imageBlob);
+                const data = await response.json();
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                const imageUrl = data.image_url; // Assuming API responds with the image URL
 
                 // Display the generated image
                 const imageContainer = document.getElementById('imageContainer');
