@@ -76,6 +76,8 @@
         <div class="image-container" id="imageContainer">
             <h2>Generated Image:</h2>
             <img id="generatedImage" src="" alt="Generated Image" />
+            <br>
+            <button onclick="downloadImage()">Download Image</button>
         </div>
     </div>
 
@@ -94,26 +96,42 @@
 
             const encodedPrompt = encodeURIComponent(prompt);
 
-            // সঠিক API URL ব্যবহার করুন
-            const apiUrl = `https://api.wdzone.rehenabibi022.workers.dev/?model=stabilityai/stable-diffusion-2-1&input=${encodedPrompt}`;
+            // API URL with prompt as input
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
 
             try {
                 const response = await fetch(apiUrl);
 
-                // JSON রেসপন্সের জন্য চেক করুন
-                const data = await response.json();
-
-                if (response.ok && data && data.image_url) {
-                    const imageContainer = document.getElementById('imageContainer');
-                    const generatedImage = document.getElementById('generatedImage');
-                    generatedImage.src = data.image_url;
-                    imageContainer.style.display = 'block';
-                } else {
-                    alert('Failed to generate image. Please try again.');
+                // Check if the response is successful
+                if (!response.ok) {
+                    const errorResponse = await response.json();
+                    alert('Error: ' + errorResponse.error);
+                    return;
                 }
+
+                // Get image data from response
+                const blob = await response.blob();
+                const imageContainer = document.getElementById('imageContainer');
+                const generatedImage = document.getElementById('generatedImage');
+
+                // Create an image URL from the blob and set it as the source
+                const imageUrl = URL.createObjectURL(blob);
+                generatedImage.src = imageUrl;
+
+                // Show the image container
+                imageContainer.style.display = 'block';
             } catch (error) {
                 alert('Error: ' + error.message);
             }
+        }
+
+        function downloadImage() {
+            const image = document.getElementById('generatedImage');
+            const imageUrl = image.src;
+            const a = document.createElement('a');
+            a.href = imageUrl;
+            a.download = 'generated_image.png';
+            a.click();
         }
     </script>
 
