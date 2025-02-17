@@ -11,17 +11,11 @@
             margin-top: 50px;
             background-color: #f4f4f9;
         }
-
         .container {
             width: 80%;
             margin: 0 auto;
         }
-
-        h1 {
-            color: #333;
-        }
-
-        input[type="text"], select {
+        input[type="text"] {
             padding: 10px;
             width: 80%;
             font-size: 16px;
@@ -29,38 +23,24 @@
             border: 1px solid #ccc;
             margin-top: 20px;
         }
-
         button {
-            padding: 15px 30px;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
             font-size: 16px;
             border-radius: 5px;
-            margin-top: 20px;
             cursor: pointer;
+            margin-top: 20px;
         }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
         .image-container {
-            margin-top: 30px;
+            margin-top: 20px;
             display: none;
         }
-
         .image-container img {
             max-width: 100%;
             height: auto;
             border-radius: 10px;
-        }
-
-        .footer {
-            margin-top: 50px;
-            text-align: center;
-            font-size: 14px;
-            color: #777;
         }
     </style>
 </head>
@@ -68,7 +48,7 @@
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt and click 'Generate Image' to see the result.</p>
+        <p>Enter a prompt and click 'Generate Image'.</p>
         
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
         <button onclick="generateImage()">Generate Image</button>
@@ -81,49 +61,37 @@
         </div>
     </div>
 
-    <div class="footer">
-        <p>&copy; 2025 AI Image Generator. All Rights Reserved.</p>
-    </div>
-
     <script>
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
-
             if (!prompt) {
                 alert('Please enter a prompt!');
                 return;
             }
 
-            // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
-
-            // Use CORS Proxy to bypass the CORS issue
-            const apiUrl = `https://cors-anywhere.herokuapp.com/https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
 
             try {
-                // Fetch the response from the API
-                const response = await fetch(apiUrl);
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'image/png'
+                    }
+                });
 
-                // Check if the response is successful
                 if (!response.ok) {
-                    const errorResponse = await response.json();
-                    alert('Error: ' + errorResponse.error);
+                    alert('Failed to generate image!');
                     return;
                 }
 
-                // Get image data from response
                 const blob = await response.blob();
-                const imageContainer = document.getElementById('imageContainer');
-                const generatedImage = document.getElementById('generatedImage');
-
-                // Create an image URL from the blob and set it as the source
                 const imageUrl = URL.createObjectURL(blob);
-                generatedImage.src = imageUrl;
-
-                // Show the image container
-                imageContainer.style.display = 'block';
+                
+                document.getElementById('generatedImage').src = imageUrl;
+                document.getElementById('imageContainer').style.display = 'block';
             } catch (error) {
-                alert('Error: ' + error.message);
+                alert('Error fetching image: ' + error.message);
             }
         }
 
