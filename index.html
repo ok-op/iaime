@@ -68,23 +68,13 @@
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt and select a model and size to generate an AI-based image.</p>
+        <p>Enter a prompt and select a model to generate an AI-based image.</p>
         
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
         <select id="modelSelect">
             <option value="stabilityai/stable-diffusion-2-1">Stable Diffusion 2.1</option>
             <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
-            <!-- Add more models here -->
-        </select>
-        <select id="widthSelect">
-            <option value="512">512x512</option>
-            <option value="1024">1024x1024</option>
-            <option value="2048">2048x2048</option>
-        </select>
-        <select id="heightSelect">
-            <option value="512">512x512</option>
-            <option value="1024">1024x1024</option>
-            <option value="2048">2048x2048</option>
+            <!-- Add more models here if needed -->
         </select>
         <button onclick="generateImage()">Generate Image</button>
 
@@ -106,17 +96,7 @@
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
             const model = document.getElementById('modelSelect').value; // Get selected model
-            const width = document.getElementById('widthSelect').value; // Get selected width
-            const height = document.getElementById('heightSelect').value; // Get selected height
-
-            // Check if the prompt is empty
-            if (!prompt) {
-                alert("Please enter a prompt.");
-                return;
-            }
-
-            // Constructing the API URL
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}&width=${width}&height=${height}`;
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}`;
 
             try {
                 const response = await fetch(apiUrl);
@@ -126,15 +106,15 @@
                     throw new Error('Failed to fetch image');
                 }
 
+                // Assuming the API returns an image URL in the response
                 const data = await response.json();
 
-                // Check if the API returns the image URL in response
+                // Check if the API returned a valid image URL
                 if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
                     const downloadButton = document.getElementById('downloadButton');
 
-                    // Set the generated image source to the URL returned by the API
                     generatedImage.src = data.image_url;
                     downloadButton.href = data.image_url;
 
