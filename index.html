@@ -86,7 +86,12 @@
     <script>
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
-            
+
+            if (!prompt) {
+                alert('Please enter a prompt!');
+                return;
+            }
+
             // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
             
