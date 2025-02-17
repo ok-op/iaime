@@ -109,7 +109,13 @@
             const width = document.getElementById('widthSelect').value; // Get selected width
             const height = document.getElementById('heightSelect').value; // Get selected height
 
-            // Constructing the API URL with provided model, input prompt, and selected width & height
+            // Check if the prompt is empty
+            if (!prompt) {
+                alert("Please enter a prompt.");
+                return;
+            }
+
+            // Constructing the API URL
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}&width=${width}&height=${height}`;
 
             try {
@@ -120,18 +126,17 @@
                     throw new Error('Failed to fetch image');
                 }
 
-                // Assuming the API returns an image URL as a blob
-                const imageBlob = await response.blob();
+                const data = await response.json();
 
-                // Check if the API returned a valid image
-                if (imageBlob) {
+                // Check if the API returns the image URL in response
+                if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
                     const downloadButton = document.getElementById('downloadButton');
 
-                    const imageUrl = URL.createObjectURL(imageBlob); // Create an object URL for the image
-                    generatedImage.src = imageUrl;
-                    downloadButton.href = imageUrl;
+                    // Set the generated image source to the URL returned by the API
+                    generatedImage.src = data.image_url;
+                    downloadButton.href = data.image_url;
 
                     imageContainer.style.display = 'block';
                 } else {
