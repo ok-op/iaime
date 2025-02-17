@@ -68,9 +68,14 @@
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt to generate an AI-based image.</p>
+        <p>Enter a prompt and select a model to generate an AI-based image.</p>
         
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
+        <select id="modelSelect">
+            <option value="stabilityai/stable-diffusion-2">Stable Diffusion 2</option>
+            <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
+            <!-- Add more models here -->
+        </select>
         <button onclick="generateImage()">Generate Image</button>
 
         <div class="image-container" id="imageContainer">
@@ -90,7 +95,8 @@
     <script>
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=SG161222/Realistic_Vision_V5.1_noVAE&input=${encodeURIComponent(prompt)}`;
+            const model = document.getElementById('modelSelect').value; // Get selected model
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}`;
 
             try {
                 const response = await fetch(apiUrl);
