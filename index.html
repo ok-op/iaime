@@ -66,6 +66,56 @@
             text-align: center;
             padding: 10px;
         }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #f3f3f3;
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .progress-value {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #E1306C, #FD1D1D);
+            transition: width 0.3s ease;
+        }
+
+        /* Loading Spinner */
+        #loading {
+            display: none;
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        #loading .loading {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4CAF50;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive styles for mobile */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+                margin: 0 10px;
+            }
+            button {
+                padding: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -89,7 +139,16 @@
             <button type="submit">Generate Image</button>
         </form>
 
-        <div id="loading">Generating Image... Please wait...</div>
+        <!-- Progress Bar -->
+        <div id="progressBar" class="progress-bar">
+            <div id="progressValue" class="progress-value"></div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="flex justify-center items-center">
+            <div class="loading"></div>
+            <span class="ml-4 text-gray-600">Processing your request...</span>
+        </div>
 
         <div id="image-result">
             <h2>Generated Image:</h2>
@@ -111,10 +170,13 @@
             const generatedImage = document.getElementById("generated-image");
             const loadingText = document.getElementById("loading");
             const downloadBtn = document.getElementById("download-btn");
+            const progressBar = document.getElementById("progressBar");
+            const progressValue = document.getElementById("progressValue");
 
             // Show loading animation
             loadingText.style.display = "block";
             imageResultDiv.style.display = "none";
+            progressBar.style.display = "block";
 
             try {
                 const response = await fetch(`https://api-wdzone.rehenabibi022.workers.dev/?input=${encodeURIComponent(prompt)}&model=${encodeURIComponent(model)}`);
@@ -126,6 +188,7 @@
                     // Hide loading and show result
                     loadingText.style.display = "none";
                     imageResultDiv.style.display = "block";
+                    progressBar.style.display = "none";
 
                     // Enable download button
                     downloadBtn.onclick = function () {
@@ -141,6 +204,7 @@
             } catch (error) {
                 alert("Error: " + error.message);
                 loadingText.style.display = "none";
+                progressBar.style.display = "none";
             }
         });
     </script>
