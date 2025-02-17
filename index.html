@@ -89,14 +89,22 @@
 
     <script>
         async function generateImage() {
-            const prompt = document.getElementById('prompt').value;
+            const prompt = document.getElementById('prompt').value.trim();
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=SG161222/Realistic_Vision_V5.1_noVAE&input=${encodeURIComponent(prompt)}`;
 
             try {
                 const response = await fetch(apiUrl);
+
+                // Check if the response is valid
+                if (!response.ok) {
+                    throw new Error('Failed to fetch image');
+                }
+
+                // Assuming the API returns a JSON object with the image URL
                 const data = await response.json();
 
-                if (data.image_url) {
+                // Check if the API returned a valid image URL
+                if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
                     const downloadButton = document.getElementById('downloadButton');
@@ -106,7 +114,7 @@
 
                     imageContainer.style.display = 'block';
                 } else {
-                    alert('Failed to generate image.');
+                    alert('Failed to generate image. Please try again.');
                 }
             } catch (error) {
                 alert('Error: ' + error.message);
