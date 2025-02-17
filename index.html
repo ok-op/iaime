@@ -5,51 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Image Generator</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #f4f4f9;
-        }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-        }
-        input[type="text"] {
-            padding: 10px;
-            width: 80%;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-top: 20px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .image-container {
-            margin-top: 20px;
-            display: none;
-        }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f4f4f4; margin-top: 50px; }
+        .container { width: 80%; margin: auto; }
+        input { padding: 10px; width: 80%; margin-top: 20px; }
+        button { padding: 10px 20px; margin-top: 20px; cursor: pointer; background: #28a745; color: white; border: none; }
+        button:hover { background: #218838; }
+        .image-container { margin-top: 30px; display: none; }
+        img { max-width: 100%; border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt and click 'Generate Image'.</p>
-        
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
         <button onclick="generateImage()">Generate Image</button>
 
@@ -64,30 +32,18 @@
     <script>
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
-            if (!prompt) {
-                alert('Please enter a prompt!');
-                return;
-            }
+            if (!prompt) { alert('Please enter a prompt!'); return; }
 
             const encodedPrompt = encodeURIComponent(prompt);
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
 
             try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'image/png'
-                    }
-                });
-
-                if (!response.ok) {
-                    alert('Failed to generate image!');
-                    return;
-                }
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Failed to fetch image');
 
                 const blob = await response.blob();
                 const imageUrl = URL.createObjectURL(blob);
-                
+
                 document.getElementById('generatedImage').src = imageUrl;
                 document.getElementById('imageContainer').style.display = 'block';
             } catch (error) {
@@ -96,10 +52,9 @@
         }
 
         function downloadImage() {
-            const image = document.getElementById('generatedImage');
-            const imageUrl = image.src;
+            const image = document.getElementById('generatedImage').src;
             const a = document.createElement('a');
-            a.href = imageUrl;
+            a.href = image;
             a.download = 'generated_image.png';
             a.click();
         }
