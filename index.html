@@ -1,238 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Image Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        header {
-            width: 100%;
-            background-color: #333;
-            padding: 20px;
+            font-family: Arial, sans-serif;
             text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
+            margin-top: 50px;
+            background-color: #f4f4f9;
         }
 
-        header img {
-            width: 100px;
+        .container {
+            width: 80%;
+            margin: 0 auto;
         }
 
-        .content {
-            margin-top: 120px;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .content h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+        h1 {
             color: #333;
         }
 
-        .content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #666;
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-top: 20px;
         }
 
-        .generate-btn {
-            background: linear-gradient(145deg, #ff5f6d, #ffc3a0);
+        button {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            color: #fff;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
             cursor: pointer;
-            border-radius: 12px;
-            box-shadow: 5px 5px 15px #ff5f6d, -5px -5px 15px #ffc3a0;
-            transition: all 0.3s ease;
         }
 
-        .generate-btn:hover {
-            box-shadow: 5px 5px 25px #ff5f6d, -5px -5px 25px #ffc3a0;
-            transform: translateY(-5px);
-        }
-
-        .generate-btn:active {
-            box-shadow: 0px 0px 5px #ff5f6d, 0px 0px 5px #ffc3a0;
-            transform: translateY(3px);
+        button:hover {
+            background-color: #45a049;
         }
 
         .image-container {
             margin-top: 30px;
+            display: none;
         }
 
         .image-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
-        footer {
-            background-color: #333;
-            color: #fff;
+        .footer {
+            margin-top: 50px;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        footer a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            text-decoration: underline;
-        }
-
-        .select-container {
-            margin-bottom: 20px;
-        }
-
-        .select-container select {
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .size-container {
-            margin-bottom: 20px;
-        }
-
-        .size-container select {
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        .download-btn {
-            background-color: #4CAF50;
-            padding: 10px 20px;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-
-        .download-btn:hover {
-            background-color: #45a049;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
-
 <body>
 
-    <header>
-        <img src="https://graph.org/file/4e8a1172e8ba4b7a0bdfa.jpg" alt="Logo">
-    </header>
-
-    <div class="content">
+    <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Generate stunning images from your prompts using AI!</p>
-
-        <div class="select-container">
-            <label for="modelSelect">Select Model: </label>
-            <select id="modelSelect">
-                <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
-            </select>
-        </div>
-
-        <div class="size-container">
-            <label for="sizeSelect">Select Image Size: </label>
-            <select id="sizeSelect">
-                <option value="256x256">256x256</option>
-                <option value="512x512">512x512</option>
-                <option value="1024x1024">1024x1024</option>
-            </select>
-        </div>
-
-        <input type="text" id="prompt" placeholder="Enter prompt..." style="padding: 10px; width: 70%; margin-bottom: 20px; border-radius: 8px; border: 1px solid #ccc;">
-        <br>
-        <button class="generate-btn" id="generateBtn">Generate Image</button>
+        <p>Enter a prompt to generate an AI-based image.</p>
+        
+        <input type="text" id="prompt" placeholder="Enter your prompt here" />
+        <button onclick="generateImage()">Generate Image</button>
 
         <div class="image-container" id="imageContainer">
-            <!-- Generated image will appear here -->
+            <h2>Generated Image:</h2>
+            <img id="generatedImage" src="" alt="Generated Image" />
+            <br />
+            <a id="downloadButton" href="" download="generated-image.png">
+                <button>Download Image</button>
+            </a>
         </div>
-
-        <button class="download-btn" id="downloadBtn" style="display:none;">Download Image</button>
     </div>
 
-    <footer>
-        <p>&copy; 2025 AI Image Generator. All Rights Reserved. | <a href="https://api-wdzone.rehenabibi022.workers.dev/" target="_blank">API</a></p>
-    </footer>
+    <div class="footer">
+        <p>&copy; 2025 AI Image Generator. All Rights Reserved.</p>
+    </div>
 
     <script>
-        document.getElementById('generateBtn').addEventListener('click', async () => {
+        async function generateImage() {
             const prompt = document.getElementById('prompt').value;
-            const model = document.getElementById('modelSelect').value;
-            const size = document.getElementById('sizeSelect').value;
-
-            if (!prompt) {
-                alert('Please enter a prompt');
-                return;
-            }
-
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${model}&input=${encodeURIComponent(prompt)}&size=${size}`;
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=SG161222/Realistic_Vision_V5.1_noVAE&input=${encodeURIComponent(prompt)}`;
 
             try {
                 const response = await fetch(apiUrl);
-                if (!response.ok) {
-                    throw new Error('Image generation failed');
-                }
-
                 const data = await response.json();
-                if (data.error) {
-                    alert(data.error);
-                    return;
+
+                if (data.image_url) {
+                    const imageContainer = document.getElementById('imageContainer');
+                    const generatedImage = document.getElementById('generatedImage');
+                    const downloadButton = document.getElementById('downloadButton');
+
+                    generatedImage.src = data.image_url;
+                    downloadButton.href = data.image_url;
+
+                    imageContainer.style.display = 'block';
+                } else {
+                    alert('Failed to generate image.');
                 }
-
-                const imageUrl = data.image_url; // Assuming API responds with the image URL
-
-                // Display the generated image
-                const imageContainer = document.getElementById('imageContainer');
-                imageContainer.innerHTML = `<img src="${imageUrl}" alt="Generated Image">`;
-
-                // Show the download button
-                const downloadBtn = document.getElementById('downloadBtn');
-                downloadBtn.style.display = 'inline-block';
-                downloadBtn.onclick = () => {
-                    const link = document.createElement('a');
-                    link.href = imageUrl;
-                    link.download = 'generated_image.png';
-                    link.click();
-                };
-
             } catch (error) {
-                alert(error.message);
+                alert('Error: ' + error.message);
             }
-        });
+        }
     </script>
 
 </body>
-
 </html>
