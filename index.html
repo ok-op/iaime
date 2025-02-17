@@ -94,12 +94,14 @@
                 return;
             }
 
+            // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
 
-            // API URL with prompt as input
+            // Correct API URL with prompt as input
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodedPrompt}`;
 
             try {
+                // Fetch the response from the API
                 const response = await fetch(apiUrl);
 
                 // Check if the response is successful
