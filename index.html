@@ -109,6 +109,7 @@
             const width = document.getElementById('widthSelect').value; // Get selected width
             const height = document.getElementById('heightSelect').value; // Get selected height
 
+            // Constructing the API URL with provided model, input prompt, and selected width & height
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}&width=${width}&height=${height}`;
 
             try {
@@ -119,7 +120,7 @@
                     throw new Error('Failed to fetch image');
                 }
 
-                // Assuming the API returns an image URL
+                // Assuming the API returns an image URL as a blob
                 const imageBlob = await response.blob();
 
                 // Check if the API returned a valid image
