@@ -92,11 +92,11 @@
             
             // API endpoint with your specific prompt
             const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=stabilityai/stable-diffusion-2-1&input=${encodedPrompt}`;
-            
+
             try {
                 // Fetch the response from the API
                 const response = await fetch(apiUrl);
-                
+
                 // Check if the response is valid
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
@@ -104,7 +104,7 @@
 
                 // Parse the JSON response
                 const data = await response.json();
-                
+
                 // Check if image URL exists in response
                 if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
