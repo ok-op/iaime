@@ -21,7 +21,7 @@
             color: #333;
         }
 
-        input[type="text"] {
+        input[type="text"], select {
             padding: 10px;
             width: 80%;
             font-size: 16px;
@@ -68,13 +68,23 @@
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt and select a model to generate an AI-based image.</p>
+        <p>Enter a prompt and select a model and size to generate an AI-based image.</p>
         
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
         <select id="modelSelect">
-            <option value="stabilityai/stable-diffusion-2">Stable Diffusion 2</option>
+            <option value="stabilityai/stable-diffusion-2-1">Stable Diffusion 2.1</option>
             <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
             <!-- Add more models here -->
+        </select>
+        <select id="widthSelect">
+            <option value="512">512x512</option>
+            <option value="1024">1024x1024</option>
+            <option value="2048">2048x2048</option>
+        </select>
+        <select id="heightSelect">
+            <option value="512">512x512</option>
+            <option value="1024">1024x1024</option>
+            <option value="2048">2048x2048</option>
         </select>
         <button onclick="generateImage()">Generate Image</button>
 
@@ -96,7 +106,10 @@
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
             const model = document.getElementById('modelSelect').value; // Get selected model
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}`;
+            const width = document.getElementById('widthSelect').value; // Get selected width
+            const height = document.getElementById('heightSelect').value; // Get selected height
+
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodeURIComponent(prompt)}&width=${width}&height=${height}`;
 
             try {
                 const response = await fetch(apiUrl);
@@ -106,17 +119,18 @@
                     throw new Error('Failed to fetch image');
                 }
 
-                // Assuming the API returns a JSON object with the image URL
-                const data = await response.json();
+                // Assuming the API returns an image URL
+                const imageBlob = await response.blob();
 
-                // Check if the API returned a valid image URL
-                if (data && data.image_url) {
+                // Check if the API returned a valid image
+                if (imageBlob) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
                     const downloadButton = document.getElementById('downloadButton');
 
-                    generatedImage.src = data.image_url;
-                    downloadButton.href = data.image_url;
+                    const imageUrl = URL.createObjectURL(imageBlob); // Create an object URL for the image
+                    generatedImage.src = imageUrl;
+                    downloadButton.href = imageUrl;
 
                     imageContainer.style.display = 'block';
                 } else {
