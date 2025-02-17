@@ -107,19 +107,26 @@
                     throw new Error('Failed to fetch image');
                 }
 
-                // Parse the JSON response
-                const data = await response.json();
+                // Check if response is in JSON format
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const data = await response.json();
 
-                // Check if image URL exists in response
-                if (data && data.image_url) {
-                    const imageContainer = document.getElementById('imageContainer');
-                    const generatedImage = document.getElementById('generatedImage');
+                    // Check if image URL exists in response
+                    if (data && data.image_url) {
+                        const imageContainer = document.getElementById('imageContainer');
+                        const generatedImage = document.getElementById('generatedImage');
 
-                    // Set the image source from the API response
-                    generatedImage.src = data.image_url;
-                    imageContainer.style.display = 'block';  // Show the image container
+                        // Set the image source from the API response
+                        generatedImage.src = data.image_url;
+                        imageContainer.style.display = 'block';  // Show the image container
+                    } else {
+                        alert('Failed to generate image. Please try again.');
+                    }
                 } else {
-                    alert('Failed to generate image. Please try again.');
+                    const text = await response.text();
+                    console.error("Received non-JSON response:", text);
+                    alert("Error: Received non-JSON response.");
                 }
             } catch (error) {
                 alert('Error: ' + error.message);
