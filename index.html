@@ -68,22 +68,14 @@
 
     <div class="container">
         <h1>AI Image Generator</h1>
-        <p>Enter a prompt and select a model to generate an AI-based image.</p>
+        <p>Enter a prompt and click 'Generate Image' to see the result.</p>
         
         <input type="text" id="prompt" placeholder="Enter your prompt here" />
-        <select id="modelSelect">
-            <option value="stabilityai/stable-diffusion-2-1">Stable Diffusion 2.1</option>
-            <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision V5.1</option>
-        </select>
         <button onclick="generateImage()">Generate Image</button>
 
         <div class="image-container" id="imageContainer">
             <h2>Generated Image:</h2>
             <img id="generatedImage" src="" alt="Generated Image" />
-            <br />
-            <a id="downloadButton" href="" download="generated-image.png">
-                <button>Download Image</button>
-            </a>
         </div>
     </div>
 
@@ -94,35 +86,32 @@
     <script>
         async function generateImage() {
             const prompt = document.getElementById('prompt').value.trim();
-            const model = document.getElementById('modelSelect').value; // Get selected model
             
-            // URL-encode the prompt and model
+            // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
-            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=${encodeURIComponent(model)}&input=${encodedPrompt}`;
-
+            
+            // API endpoint with your specific prompt
+            const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?model=stabilityai/stable-diffusion-2-1&input=${encodedPrompt}`;
+            
             try {
+                // Fetch the response from the API
                 const response = await fetch(apiUrl);
-
+                
                 // Check if the response is valid
                 if (!response.ok) {
                     throw new Error('Failed to fetch image');
                 }
 
-                // Parse the JSON response from the API
+                // Parse the JSON response
                 const data = await response.json();
                 
-                // Debugging log to check the structure of the response
-                console.log(data);
-
-                // Assuming the API returns an image URL under the field `image_url`
+                // Check if image URL exists in response
                 if (data && data.image_url) {
                     const imageContainer = document.getElementById('imageContainer');
                     const generatedImage = document.getElementById('generatedImage');
-                    const downloadButton = document.getElementById('downloadButton');
 
-                    generatedImage.src = data.image_url;  // Set image source from the API response
-                    downloadButton.href = data.image_url; // Set download link to image URL
-
+                    // Set the image source from the API response
+                    generatedImage.src = data.image_url;
                     imageContainer.style.display = 'block';  // Show the image container
                 } else {
                     alert('Failed to generate image. Please try again.');
