@@ -92,34 +92,24 @@
                 return;
             }
 
-            // Ensure the input is properly encoded
             const encodedPrompt = encodeURIComponent(prompt);
-
-            // API endpoint with your specific prompt
             const apiUrl = `https://cors-anywhere.herokuapp.com/https://api-wdzone.rehenabibi022.workers.dev/?model=stabilityai/stable-diffusion-2-1&input=${encodedPrompt}`;
 
             try {
-                // Fetch the response from the API
                 const response = await fetch(apiUrl);
 
-                // Check if the response is valid
-                if (!response.ok) {
-                    throw new Error('Failed to fetch image');
-                }
-
-                // Check if response is in JSON format
+                // Log the raw response to inspect its content
                 const contentType = response.headers.get("content-type");
+                console.log("Content-Type:", contentType);
+
+                // Check if response is JSON
                 if (contentType && contentType.includes("application/json")) {
                     const data = await response.json();
-
-                    // Check if image URL exists in response
                     if (data && data.image_url) {
                         const imageContainer = document.getElementById('imageContainer');
                         const generatedImage = document.getElementById('generatedImage');
-
-                        // Set the image source from the API response
                         generatedImage.src = data.image_url;
-                        imageContainer.style.display = 'block';  // Show the image container
+                        imageContainer.style.display = 'block';
                     } else {
                         alert('Failed to generate image. Please try again.');
                     }
