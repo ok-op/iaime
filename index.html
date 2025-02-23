@@ -152,10 +152,13 @@
 
                 if (!response.ok) throw new Error("Failed to generate image!");
 
-                // ✅ ইমেজ ডাটা ব্লব হিসেবে পড়া
-                const blob = await response.blob();
-                const imageUrl = URL.createObjectURL(blob);
-                generatedImage.src = imageUrl;
+                const data = await response.json();
+
+                if (!data || !data.image_url) {
+                    throw new Error("Invalid response from server.");
+                }
+
+                generatedImage.src = data.image_url;
 
                 // Hide loading and show image
                 loadingDiv.style.display = "none";
@@ -164,7 +167,7 @@
                 // Enable download button
                 downloadBtn.onclick = function () {
                     const a = document.createElement("a");
-                    a.href = imageUrl;
+                    a.href = data.image_url;
                     a.download = "generated_image.png";
                     a.click();
                 };
