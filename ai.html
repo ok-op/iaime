@@ -1,429 +1,175 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>AI Image Generator</title>
-
     <style>
-
         * {
-
             margin: 0;
-
             padding: 0;
-
             box-sizing: border-box;
-
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
         }
-
-
-
         body {
-
             background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-
             color: #fff;
-
             min-height: 100vh;
-
+            text-align: center;
+            padding-top: 20px;
         }
-
-
-
-        nav {
-
-            background: rgba(0, 0, 0, 0.8);
-
-            padding: 1rem;
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-
-        }
-
-
-
-        .nav-container {
-
-            max-width: 1200px;
-
-            margin: 0 auto;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-        }
-
-
-
-        .logo {
-
-            font-size: 1.5rem;
-
-            font-weight: bold;
-
-            color: #00ff88;
-
-        }
-
-
-
-        .main-container {
-
+        .container {
             max-width: 800px;
-
-            margin: 2rem auto;
-
-            padding: 2rem;
-
-        }
-
-
-
-        .input-container {
-
+            margin: auto;
             background: rgba(255, 255, 255, 0.1);
-
-            padding: 2rem;
-
-            border-radius: 15px;
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-        }
-
-
-
-        textarea {
-
-            width: 100%;
-
-            padding: 1rem;
-
-            margin: 1rem 0;
-
-            background: rgba(255, 255, 255, 0.9);
-
-            border: none;
-
-            border-radius: 8px;
-
-            resize: vertical;
-
-            min-height: 100px;
-
-            font-size: 1rem;
-
-        }
-
-
-
-        button {
-
-            background: #00ff88;
-
-            color: #1a1a1a;
-
-            border: none;
-
-            padding: 0.8rem 2rem;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-weight: bold;
-
-            transition: transform 0.2s;
-
-        }
-
-
-
-        button:hover {
-
-            transform: scale(1.05);
-
-        }
-
-
-
-        .result-container {
-
-            margin-top: 2rem;
-
-            text-align: center;
-
-        }
-
-
-
-        #generatedImage {
-
-            max-width: 100%;
-
+            padding: 20px;
             border-radius: 10px;
-
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
-
-
-
-        footer {
-
-            background: rgba(0, 0, 0, 0.8);
-
-            padding: 1rem;
-
-            text-align: center;
-
-            position: fixed;
-
-            bottom: 0;
-
+        textarea, select, button {
             width: 100%;
-
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
         }
-
-
-
+        textarea {
+            min-height: 80px;
+        }
+        button {
+            background: #00ff88;
+            color: #000;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #00cc77;
+        }
+        .image-container {
+            display: none;
+            margin-top: 20px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons a {
+            text-decoration: none;
+            padding: 8px 12px;
+            background: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+        }
         .loading {
-
             display: none;
-
-            margin: 1rem 0;
-
+            margin: 10px 0;
         }
-
-
-
         .loader {
-
             border: 4px solid #f3f3f3;
-
             border-top: 4px solid #00ff88;
-
             border-radius: 50%;
-
             width: 30px;
-
             height: 30px;
-
             animation: spin 1s linear infinite;
-
-            margin: 0 auto;
-
+            margin: auto;
         }
-
-
-
         @keyframes spin {
-
             0% { transform: rotate(0deg); }
-
             100% { transform: rotate(360deg); }
-
         }
-
-
-
-        .error {
-
-            color: #ff4444;
-
-            margin: 1rem 0;
-
-            display: none;
-
-        }
-
     </style>
-
 </head>
-
 <body>
 
-    <nav>
-
-        <div class="nav-container">
-
-            <div class="logo">AI ImageGen</div>
-
-            <div>
-
-                <a href="#" style="color: #fff; text-decoration: none;">Home</a>
-
-                <a href="#" style="color: #fff; text-decoration: none; margin-left: 1rem;">About</a>
-
-                <a href="#" style="color: #fff; text-decoration: none; margin-left: 1rem;">Contact</a>
-
+    <div class="container">
+        <h2>AI Image Generator</h2>
+        <form id="imageForm">
+            <textarea id="prompt" placeholder="Enter your text prompt..."></textarea>
+            <select id="modelSelect">
+                <option value="SG161222/Realistic_Vision_V5.1_noVAE">Realistic Vision</option>
+                <option value="Lykon/DreamShaper-v7">DreamShaper</option>
+                <option value="stabilityai/stable-diffusion-xl-base-1.0" selected>SDXL</option>
+                <option value="XpucT/Deliberate">Deliberate</option>
+                <option value="stabilityai/stable-diffusion-2-1">Anything v5</option>
+                <option value="darkstorm2150/Protogen_x5.8">Protogen</option>
+                <option value="black-forest-labs/FLUX.1-dev">Flux</option>
+            </select>
+            <div class="loading">
+                <div class="loader"></div>
             </div>
+            <button type="submit">Generate Image</button>
+        </form>
 
-        </div>
-
-    </nav>
-
-
-
-    <div class="main-container">
-
-        <div class="input-container">
-
-            <h2>Generate Image from Text</h2>
-
-            <form id="imageForm">
-
-                <textarea id="prompt" placeholder="Enter your text prompt here..."></textarea>
-
-                <div class="loading">
-
-                    <div class="loader"></div>
-
-                </div>
-
-                <div class="error" id="errorMessage"></div>
-
-                <button type="submit">Generate Image</button>
-
-            </form>
-
-            <div class="result-container">
-
-                <img id="generatedImage" alt="Generated image will appear here">
-
+        <div class="image-container">
+            <img id="generatedImage" alt="Generated Image">
+            <div class="buttons">
+                <a id="viewButton" href="#" target="_blank">View Photo</a>
+                <a id="downloadButton" href="#" download="ai_image.jpg">Download Photo</a>
             </div>
-
         </div>
-
     </div>
 
-
-
-    <footer>
-
-        <p>&copy; 2023 AI ImageGen. All rights reserved.</p>
-
-    </footer>
-
-
-
     <script>
-
-        // Replace with your Hugging Face API token
-
         const HF_API_TOKEN = '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';
 
-        const MODEL_ID = 'stabilityai/stable-diffusion-xl-base-1.0';
-
-
-
         document.getElementById('imageForm').addEventListener('submit', async (e) => {
-
             e.preventDefault();
 
             const prompt = document.getElementById('prompt').value;
-
-            const errorMessage = document.getElementById('errorMessage');
-
+            const modelId = document.getElementById('modelSelect').value;
             const loading = document.querySelector('.loading');
-
+            const imageContainer = document.querySelector('.image-container');
             const imageElement = document.getElementById('generatedImage');
-
-
+            const viewButton = document.getElementById('viewButton');
+            const downloadButton = document.getElementById('downloadButton');
 
             if (!prompt) {
-
-                errorMessage.textContent = 'Please enter a text prompt';
-
-                errorMessage.style.display = 'block';
-
+                alert('Please enter a prompt');
                 return;
-
             }
 
-
+            loading.style.display = 'block';
+            imageContainer.style.display = 'none';
 
             try {
-
-                loading.style.display = 'block';
-
-                errorMessage.style.display = 'none';
-
-                imageElement.style.display = 'none';
-
-
-
-                // Step 1: Send the prompt to Hugging Face API
-
                 const response = await fetch(
-
-                    `https://api-inference.huggingface.co/models/${MODEL_ID}`,
-
+                    `https://api-inference.huggingface.co/models/${modelId}`,
                     {
-
                         method: 'POST',
-
                         headers: {
-
                             'Authorization': `Bearer ${HF_API_TOKEN}`,
-
                             'Content-Type': 'application/json',
-
                         },
-
                         body: JSON.stringify({ inputs: prompt }),
-
                     }
-
                 );
 
-
-
                 if (!response.ok) {
-
                     throw new Error('Failed to generate image');
-
                 }
 
-
-
-                // Step 2: Get the image URL from the response
-
                 const blob = await response.blob();
-
                 const imageUrl = URL.createObjectURL(blob);
 
                 imageElement.src = imageUrl;
-
-                imageElement.style.display = 'block';
+                viewButton.href = imageUrl;
+                downloadButton.href = imageUrl;
+                imageContainer.style.display = 'block';
 
             } catch (error) {
-
-                errorMessage.textContent = `Error: ${error.message}`;
-
-                errorMessage.style.display = 'block';
-
+                alert(`Error: ${error.message}`);
             } finally {
-
                 loading.style.display = 'none';
-
             }
-
         });
-
     </script>
 
 </body>
-
-      </html>
+</html>
