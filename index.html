@@ -152,12 +152,9 @@
 
                 if (!response.ok) throw new Error("Failed to generate image!");
 
-                const result = await response.json();
-                if (!result || !result.image) {
-                    throw new Error("Invalid response from API");
-                }
-
-                const imageUrl = result.image;
+                // ✅ ইমেজ ডাটা ব্লব হিসেবে পড়া
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
                 generatedImage.src = imageUrl;
 
                 // Hide loading and show image
