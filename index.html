@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -29,8 +29,8 @@
         .container {
             background: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 500px;
             text-align: center;
@@ -41,13 +41,15 @@
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
+            font-size: 16px;
         }
 
         button {
             background-color: #4CAF50;
             color: white;
             cursor: pointer;
+            font-weight: bold;
         }
 
         button:hover {
@@ -63,6 +65,7 @@
         #image-result img {
             max-width: 100%;
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         #loading {
@@ -70,6 +73,22 @@
             text-align: center;
             font-size: 16px;
             margin-top: 20px;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #4CAF50;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -99,7 +118,8 @@
 
         <!-- Loading Indicator -->
         <div id="loading">
-            <span>Generating image...</span>
+            <div class="loading-spinner"></div>
+            <p>Generating image...</p>
         </div>
 
         <div id="image-result">
@@ -117,15 +137,16 @@
             const model = document.getElementById("model").value;
             const imageResultDiv = document.getElementById("image-result");
             const generatedImage = document.getElementById("generated-image");
-            const loadingText = document.getElementById("loading");
+            const loadingDiv = document.getElementById("loading");
             const downloadBtn = document.getElementById("download-btn");
 
-            // Show loading
-            loadingText.style.display = "block";
+            // Show loading animation
+            loadingDiv.style.display = "block";
             imageResultDiv.style.display = "none";
 
             try {
-                const response = await fetch(`https://api-wdzone.rehenabibi022.workers.dev/?input=${encodeURIComponent(prompt)}&model=${encodeURIComponent(model)}`);
+                const apiUrl = `https://api-wdzone.rehenabibi022.workers.dev/?input=${encodeURIComponent(prompt)}&model=${encodeURIComponent(model)}`;
+                const response = await fetch(apiUrl);
 
                 if (!response.ok) throw new Error("Failed to generate image!");
 
@@ -134,7 +155,7 @@
                 generatedImage.src = imageUrl;
 
                 // Hide loading and show image
-                loadingText.style.display = "none";
+                loadingDiv.style.display = "none";
                 imageResultDiv.style.display = "block";
 
                 // Enable download button
@@ -146,7 +167,7 @@
                 };
             } catch (error) {
                 alert("Error: " + error.message);
-                loadingText.style.display = "none";
+                loadingDiv.style.display = "none";
             }
         });
     </script>
