@@ -52,39 +52,48 @@
             100% { border-color: red; }
         }
 
-        /* 🦋 প্রজাপতির GIF */
-        .butterfly {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #f0f0f0;
-            animation: flyUp 4s linear infinite;
-        }
+        .butterfly-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* যেন ইউজার ক্লিক না করতে পারে */
+}
 
-        .butterfly.left {
-            left: -60px; /* সমান দূরত্ব */
-            animation-delay: 0s;
-        }
+.butterfly {
+    position: absolute;
+    width: 50px; /* ইমেজের সাইজ */
+    height: auto;
+    animation: flyAnimation 5s linear infinite;
+}
 
-        .butterfly.right {
-            right: -60px; /* সমান দূরত্ব */
-            animation-delay: 2s;
-        }
+/* বাম পাশের প্রজাপতিগুলো */
+.butterfly.left-1 { top: 10%; left: 5%; animation-delay: 0s; }
+.butterfly.left-2 { top: 40%; left: 8%; animation-delay: 1s; }
+.butterfly.left-3 { top: 70%; left: 6%; animation-delay: 2s; }
 
-        @keyframes flyUp {
-            0% { top: 100%; opacity: 1; }
-            100% { top: -50px; opacity: 0; }
-        }
+/* ডান পাশের প্রজাপতিগুলো */
+.butterfly.right-1 { top: 15%; right: 5%; animation-delay: 0.5s; }
+.butterfly.right-2 { top: 50%; right: 8%; animation-delay: 1.5s; }
+.butterfly.right-3 { top: 75%; right: 6%; animation-delay: 2.5s; }
+
+@keyframes flyAnimation {
+    0% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-30px) rotate(10deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
     </style>
 </head>
 <body>
     <button onclick="loadEncodedHTML()">Load Encoded Page</button>
     
     <!-- আইফ্রেম ও প্রজাপতির GIF -->
-    <div id="frameContainer">
-        <iframe id="outputFrame"></iframe>
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left" alt="Butterfly">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right" alt="Butterfly">
+    <div class="butterfly-container">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-1">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-2">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-3">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-1">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-2">
+    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-3">
     </div>
 
     <script>
