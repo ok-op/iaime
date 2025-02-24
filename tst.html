@@ -51,31 +51,6 @@
             75% { border-color: orange; }
             100% { border-color: red; }
         }
-
-        /* 🦋 প্রজাপতির এনিমেশন */
-.butterfly {
-    position: fixed; /* পুরো স্ক্রিনে উড়বে */
-    width: 50px;
-    height: auto;
-    background-color: #f0f0f0;
-    animation: flyUp 6s linear infinite;
-    z-index: -1; /* ব্যাকগ্রাউন্ডের নিচে রাখবে */
-}
-
-/* বাম পাশের প্রজাপতির অবস্থান */
-.butterfly.left-1 { left: 5%; bottom: -100px; animation-delay: 0s; }
-.butterfly.left-2 { left: 10%; bottom: -100px; animation-delay: 1s; }
-.butterfly.left-3 { left: 15%; bottom: -100px; animation-delay: 2s; }
-
-/* ডান পাশের প্রজাপতির অবস্থান */
-.butterfly.right-1 { right: 5%; bottom: -100px; animation-delay: 0.5s; }
-.butterfly.right-2 { right: 10%; bottom: -100px; animation-delay: 1.5s; }
-.butterfly.right-3 { right: 15%; bottom: -100px; animation-delay: 2.5s; }
-
-@keyframes flyUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-200vh) rotate(30deg); opacity: 0; }
-}
     </style>
 </head>
 <body>
@@ -83,14 +58,6 @@
     
     <div id="frameContainer">
         <iframe id="outputFrame"></iframe>
-        
-        <!-- 🦋 প্রজাপতির GIF -->
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-1">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-2">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-3">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-1">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-2">
-        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-3">
     </div>
 
     <script>
