@@ -131,52 +131,7 @@
         </div>
     </div>
     
-    <script>
-        document.getElementById("image-form").addEventListener("submit", async (event) => {
-            event.preventDefault();
-
-            const prompt = document.getElementById("prompt").value;
-            const model = document.getElementById("model").value;
-            const imageResultDiv = document.getElementById("image-result");
-            const generatedImage = document.getElementById("generated-image");
-            const loadingDiv = document.getElementById("loading");
-            const downloadBtn = document.getElementById("download-btn");
-
-            // Show loading animation
-            loadingDiv.style.display = "block";
-            imageResultDiv.style.display = "none";
-
-            try {
-                const apiUrl = `https://wdzone-ai-ime-generator-api.woodmirror.workers.dev/?input=${encodeURIComponent(prompt)}&model=${encodeURIComponent(model)}`;
-                const response = await fetch(apiUrl);
-
-                if (!response.ok) throw new Error("Failed to generate image!");
-
-                const data = await response.json();
-
-                if (!data || !data.image_url) {
-                    throw new Error("Invalid response from server.");
-                }
-
-                generatedImage.src = data.image_url;
-
-                // Hide loading and show image
-                loadingDiv.style.display = "none";
-                imageResultDiv.style.display = "block";
-
-                // Enable download button
-                downloadBtn.onclick = function () {
-                    const a = document.createElement("a");
-                    a.href = data.image_url;
-                    a.download = "generated_image.png";
-                    a.click();
-                };
-            } catch (error) {
-                alert("Error: " + error.message);
-                loadingDiv.style.display = "none";
-            }
-        });
-    </script>
+     <script src="script.js"></script>
     
 </body>
 </html>
