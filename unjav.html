@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Code Encoder/Decoder</title>
+    <title>JavaScript Encoder/Decoder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -42,9 +42,9 @@
 </head>
 <body>
 
-    <h2>🔐 Full Code Encoder/Decoder</h2>
+    <h2>🔐 JavaScript Encoder/Decoder</h2>
 
-    <textarea id="inputCode" placeholder="এখানে আপনার সম্পূর্ণ কোড লিখুন..."></textarea>
+    <textarea id="inputCode" placeholder="এখানে আপনার কোড লিখুন..."></textarea>
     
     <br>
     <button onclick="encodeScript()">🔒 Encode</button>
@@ -58,8 +58,8 @@
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
 
-            // কোডটি encodeURIComponent ও escape ব্যবহার করে এনকোড করা হচ্ছে
-            let encodedText = escape(encodeURIComponent(inputText));
+            // শুধুমাত্র encodeURIComponent ব্যবহার করা হবে
+            let encodedText = encodeURIComponent(inputText);
 
             document.getElementById("outputCode").value = `eval(unescape(decodeURIComponent("${encodedText}")));`;
         }
@@ -67,11 +67,11 @@
         function decodeScript() {
             let encodedText = document.getElementById("outputCode").value;
 
-            // `eval(unescape(decodeURIComponent("...")));` ফরম্যাট থেকে মূল অংশ বের করা
+            // eval(unescape(decodeURIComponent("..."))); ফরম্যাট থেকে শুধু এনকোডেড অংশ বের করা
             let match = encodedText.match(/evalunescapedecodeURIComponent"(.+)";/);
 
             if (match && match[1]) {
-                let decodedText = decodeURIComponent(unescape(match[1])); // এনকোডেড অংশ ডিকোড করা হচ্ছে
+                let decodedText = decodeURIComponent(match[1]); // এনকোডেড অংশ ডিকোড করা হচ্ছে
                 document.getElementById("inputCode").value = decodedText;
             } else {
                 alert("Invalid encoded format!"); // ভুল ফরম্যাট হলে অ্যালার্ট দেখানো হবে
