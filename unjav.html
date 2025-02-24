@@ -58,19 +58,20 @@
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
 
-            // পুরো HTML, CSS, JS কোড এনকোড করা হচ্ছে
-            let encodedText = btoa(unescape(encodeURIComponent(inputText)));
+            // কোডটি encodeURIComponent ও escape ব্যবহার করে এনকোড করা হচ্ছে
+            let encodedText = escape(encodeURIComponent(inputText));
 
-            document.getElementById("outputCode").value = `eval(unescape(decodeURIComponent(atob('${encodedText}'))));`;
+            document.getElementById("outputCode").value = `eval(unescape(decodeURIComponent("${encodedText}")));`;
         }
 
         function decodeScript() {
             let encodedText = document.getElementById("outputCode").value;
 
-            // `eval(unescape(decodeURIComponent(atob('...'))));` এর ভিতরের অংশ বের করা
-            let match = encodedText.match(/evalunescapedecodeURIComponentatob'(.+)';/);
+            // `eval(unescape(decodeURIComponent("...")));` ফরম্যাট থেকে মূল অংশ বের করা
+            let match = encodedText.match(/evalunescapedecodeURIComponent"(.+)";/);
+
             if (match && match[1]) {
-                let decodedText = decodeURIComponent(escape(atob(match[1]))); // এনকোডেড অংশ আনএনকোড করা হচ্ছে
+                let decodedText = decodeURIComponent(unescape(match[1])); // এনকোডেড অংশ ডিকোড করা হচ্ছে
                 document.getElementById("inputCode").value = decodedText;
             } else {
                 alert("Invalid encoded format!"); // ভুল ফরম্যাট হলে অ্যালার্ট দেখানো হবে
