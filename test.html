@@ -1,20 +1,34 @@
-// Base64 এনকোড করা JavaScript কোড
-const encodedScript = "Y29uc29sZS5sb2coJ0hlbGxvLCB0aGlzIGlzIGFuIGVuY29kZWQgc2NyaXB0IScpOw==";
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Base64 JavaScript Load Test</title>
+</head>
+<body>
+    <!-- আপনার কন্টেন্ট এখানে -->
 
-// ফাংশন: Base64 ডিকোড করে রান করানো
-function decodeAndRunScript(encodedStr) {
-    try {
-        const decodedScript = atob(encodedStr); // Base64 থেকে ডিকোড
-        const scriptElement = document.createElement("script");
-        scriptElement.textContent = decodedScript; // ডিকোড করা JS সেট
-        document.body.appendChild(scriptElement); // HTML-এ যোগ করো
-        console.log("✅ Script Loaded Successfully!");
-    } catch (error) {
-        console.error("❌ ডিকোডিং তে সমস্যা:", error);
-    }
-}
+    <!-- স্ক্রিপ্ট এখানে যুক্ত করুন -->
+    <script>
+        // Base64 এনকোড করা JavaScript কোড
+        const encodedScript = "Y29uc29sZS5sb2coJ0hlbGxvLCB0aGlzIGlzIGFuIGVuY29kZWQgc2NyaXB0IScpOw==";
 
-// পেজ লোড হলে রান করাও
-window.onload = function () {
-    decodeAndRunScript(encodedScript);
-};
+        // ফাংশন: Base64 ডিকোড করে রান করানো
+        function decodeAndRunScript(encodedStr) {
+            try {
+                const decodedScript = atob(encodedStr); // Base64 থেকে ডিকোড
+                const scriptElement = document.createElement("script");
+                scriptElement.textContent = decodedScript; // ডিকোড করা JS সেট
+                document.body.appendChild(scriptElement); // HTML-এ যোগ করো
+                console.log("✅ Script Loaded Successfully!");
+            } catch (error) {
+                console.error("❌ ডিকোডিং তে সমস্যা:", error);
+            }
+        }
+
+        // পেজ লোড হলে রান করাও
+        window.onload = function () {
+            decodeAndRunScript(encodedScript);
+        };
+    </script>
+</body>
+</html>
