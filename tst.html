@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaScript Obfuscator Tool</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-obfuscator/2.20.0/index.browser.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         textarea { width: 80%; height: 150px; margin-bottom: 10px; font-family: monospace; }
@@ -25,16 +24,10 @@
     <script>
         function obfuscateCode() {
             let inputCode = document.getElementById("inputCode").value;
-            let obfuscatedCode = JavaScriptObfuscator.obfuscate(inputCode, {
-                compact: true, // কোড ছোট করে দেয়
-                controlFlowFlattening: true, // কোডের লজিক আরও জটিল করে
-                controlFlowFlatteningThreshold: 1,
-                numbersToExpressions: true,
-                stringArrayEncoding: ['base64'],
-                stringArrayThreshold: 1
-            });
+            let encodedCode = btoa(unescape(encodeURIComponent(inputCode))); // Base64 Encode
+            let obfuscatedCode = `eval(decodeURIComponent(escape(atob("${encodedCode}"))));`;
 
-            document.getElementById("output").innerText = obfuscatedCode.getObfuscatedCode();
+            document.getElementById("output").innerText = obfuscatedCode;
         }
 
         function copyToClipboard() {
