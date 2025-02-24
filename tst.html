@@ -29,7 +29,14 @@
             border-radius: 5px;
             margin-bottom: 10px;
             animation: textAnimation 2s linear infinite;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* শ্যাডো যোগ করা হয়েছে */
+            transition: box-shadow 0.3s ease-in-out;
         }
+        /* বাটনে হোভার করলে শ্যাডো আরও বড় হবে */
+        .animated-button:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+        }
+        
         /* টেক্সট অ্যানিমেশন */
         @keyframes textAnimation {
             0% { color: red; }
@@ -38,6 +45,7 @@
             75% { color: orange; }
             100% { color: red; }
         }
+        
 
         #frameContainer {
             position: relative;
