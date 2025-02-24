@@ -58,13 +58,20 @@
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
             let encodedText = escape(inputText);
-            document.getElementById("outputCode").value = "eval(unescape('" + encodedText + "'));";
+            document.getElementById("outputCode").value = `eval(unescape('${encodedText}'));`;
         }
 
         function decodeScript() {
             let encodedText = document.getElementById("outputCode").value;
-            let decodedText = encodedText.replace(/evalunescape'(.*)';/, '$1');
-            document.getElementById("inputCode").value = unescape(decodedText);
+            
+            // সঠিক regex দিয়ে eval(unescape('...')) অংশ থেকে শুধু এনকোডেড অংশ বের করা
+            let match = encodedText.match(/evalunescape'(.+)';/);
+            
+            if (match && match[1]) {
+                document.getElementById("inputCode").value = unescape(match[1]);
+            } else {
+                alert("Invalid encoded text!");
+            }
         }
 
         function copyToClipboard() {
