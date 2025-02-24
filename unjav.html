@@ -58,8 +58,8 @@
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
 
-            // JavaScript কোডকে escape() ব্যবহার করে এনকোড করা
-            let encodedText = escape(inputText);
+            // JavaScript কোডকে encodeURIComponent ব্যবহার করে এনকোড করা
+            let encodedText = encodeURIComponent(inputText);
 
             // Eval + unescape ফরম্যাটে সংরক্ষণ করা
             document.getElementById("outputCode").value = `eval(unescape("${encodedText}"));`;
@@ -72,7 +72,7 @@
             let match = encodedText.match(/evalunescape"(.+)";/);
 
             if (match && match[1]) {
-                let decodedText = unescape(match[1]); // ডিকোড করা হচ্ছে
+                let decodedText = decodeURIComponent(match[1]); // ডিকোড করা হচ্ছে
                 document.getElementById("inputCode").value = decodedText;
             } else {
                 alert("Invalid encoded format!"); // ভুল ফরম্যাট হলে অ্যালার্ট দেখানো হবে
