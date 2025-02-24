@@ -130,12 +130,8 @@
             <button id="download-btn">Download Image</button>
         </div>
     </div>
-
-    fetch('Encodescript.txt')
-    .then(response => response.text())
-    .then(encodedCode => {
-        eval(unescape(encodedCode));
-    })
-    .catch(error => console.error('Error loading script:', error));
+    
+    <script src="script.js"></script>
+    
 </body>
 </html>
