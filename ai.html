@@ -122,61 +122,6 @@
     </div>
 
     <script>
-        const HF_API_TOKEN = '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';
-
-        document.getElementById('imageForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const prompt = document.getElementById('prompt').value;
-            const modelId = document.getElementById('modelSelect').value;
-            const loading = document.querySelector('.loading');
-            const imageContainer = document.querySelector('.image-container');
-            const imageElement = document.getElementById('generatedImage');
-            const viewButton = document.getElementById('viewButton');
-            const downloadButton = document.getElementById('downloadButton');
-
-            if (!prompt) {
-                alert('Please enter a prompt');
-                return;
-            }
-
-            loading.style.display = 'block';
-            imageContainer.style.display = 'none';
-
-            try {
-                const response = await fetch(
-                    `https://api-inference.huggingface.co/models/${modelId}`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${HF_API_TOKEN}`,
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ inputs: prompt }),
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error('Failed to generate image');
-                }
-
-                const blob = await response.blob();
-                const imageUrl = URL.createObjectURL(blob);
-
-                imageElement.src = imageUrl;
-                viewButton.href = imageUrl;
-                downloadButton.href = imageUrl;
-                imageContainer.style.display = 'block';
-
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            } finally {
-                loading.style.display = 'none';
-            }
-        });
-    </script>
-
-    <script>
     // এনকোডেড জাভাস্ক্রিপ্ট কোড
     const encodedScript = "const _0x5c3fac=_0xdcfd;function _0xdcfd(_0xb66d19,_0xaf7dc9){const _0x352abf=_0x352a();return _0xdcfd=function(_0xdcfdaf,_0x555fec){_0xdcfdaf=_0xdcfdaf-0x136;let _0x1c37e6=_0x352abf[_0xdcfdaf];return _0x1c37e6;},_0xdcfd(_0xb66d19,_0xaf7dc9);}function _0x352a(){const _0x37c082=['1899380wNbyQI','4KjzGtc','stringify','1917546fqYpYF','display','href','6381186cYmttz','4197100ysUTip','Bearer\x20','Error:\x20','querySelector','generatedImage','blob','8afRQHu','none','1702386RxlBOq','Please\x20enter\x20a\x20prompt','value','block','createObjectURL','POST','imageForm','addEventListener','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','message','364539Kgzaeg','292835AdqOyt','style','Failed\x20to\x20generate\x20image','downloadButton','.image-container','prompt','modelSelect','getElementById','preventDefault'];_0x352a=function(){return _0x37c082;};return _0x352a();}(function(_0x4a4d8f,_0x39d393){const _0x305c60=_0xdcfd,_0x422d93=_0x4a4d8f();while(!![]){try{const _0x2d251d=parseInt(_0x305c60(0x145))/0x1*(parseInt(_0x305c60(0x14f))/0x2)+parseInt(_0x305c60(0x151))/0x3+parseInt(_0x305c60(0x155))/0x4+-parseInt(_0x305c60(0x14e))/0x5+-parseInt(_0x305c60(0x154))/0x6+parseInt(_0x305c60(0x144))/0x7*(-parseInt(_0x305c60(0x138))/0x8)+-parseInt(_0x305c60(0x13a))/0x9;if(_0x2d251d===_0x39d393)break;else _0x422d93['push'](_0x422d93['shift']());}catch(_0x2cd6e1){_0x422d93['push'](_0x422d93['shift']());}}}(_0x352a,0x8feb1));const HF_API_TOKEN=_0x5c3fac(0x142);document[_0x5c3fac(0x14c)](_0x5c3fac(0x140))[_0x5c3fac(0x141)]('submit',async _0x175b66=>{const _0x174c6c=_0x5c3fac;_0x175b66[_0x174c6c(0x14d)]();const _0x12311a=document[_0x174c6c(0x14c)](_0x174c6c(0x14a))[_0x174c6c(0x13c)],_0x2f6737=document[_0x174c6c(0x14c)](_0x174c6c(0x14b))[_0x174c6c(0x13c)],_0x3dbd12=document[_0x174c6c(0x158)]('.loading'),_0x2d9704=document[_0x174c6c(0x158)](_0x174c6c(0x149)),_0x55fa58=document['getElementById'](_0x174c6c(0x136)),_0x256885=document['getElementById']('viewButton'),_0x1a1ff4=document[_0x174c6c(0x14c)](_0x174c6c(0x148));if(!_0x12311a){alert(_0x174c6c(0x13b));return;}_0x3dbd12['style'][_0x174c6c(0x152)]='block',_0x2d9704[_0x174c6c(0x146)][_0x174c6c(0x152)]=_0x174c6c(0x139);try{const _0xb62b65=await fetch('https://api-inference.huggingface.co/models/'+_0x2f6737,{'method':_0x174c6c(0x13f),'headers':{'Authorization':_0x174c6c(0x156)+HF_API_TOKEN,'Content-Type':'application/json'},'body':JSON[_0x174c6c(0x150)]({'inputs':_0x12311a})});if(!_0xb62b65['ok'])throw new Error(_0x174c6c(0x147));const _0x595adc=await _0xb62b65[_0x174c6c(0x137)](),_0x45c8ab=URL[_0x174c6c(0x13e)](_0x595adc);_0x55fa58['src']=_0x45c8ab,_0x256885['href']=_0x45c8ab,_0x1a1ff4[_0x174c6c(0x153)]=_0x45c8ab,_0x2d9704[_0x174c6c(0x146)][_0x174c6c(0x152)]=_0x174c6c(0x13d);}catch(_0x3ba9c1){alert(_0x174c6c(0x157)+_0x3ba9c1[_0x174c6c(0x143)]);}finally{_0x3dbd12[_0x174c6c(0x146)][_0x174c6c(0x152)]=_0x174c6c(0x139);}});";
 
