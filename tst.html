@@ -3,62 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encoding Detector & Decoder</title>
+    <title>JavaScript Encoding Detector & Beautifier</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        textarea { width: 80%; height: 100px; margin-bottom: 10px; }
+        textarea { width: 80%; height: 150px; margin-bottom: 10px; font-family: monospace; }
         button { padding: 10px 15px; margin: 5px; }
-        #output { margin-top: 10px; font-weight: bold; }
+        #output { white-space: pre-wrap; text-align: left; background: #f4f4f4; padding: 10px; width: 80%; margin: 0 auto; }
     </style>
 </head>
 <body>
 
-    <h2>Encoding Detector & Decoder</h2>
-    <textarea id="inputText" placeholder="এখানে এনকোডেড টেক্সট দিন..."></textarea><br>
-    <button onclick="detectEncoding()">ডিটেক্ট এনকোডিং</button>
-    <button onclick="decodeText()">ডিকোড করুন</button>
+    <h2>JavaScript Code Detector & Beautifier</h2>
+    <textarea id="inputText" placeholder="এখানে JavaScript কোড পেস্ট করুন..."></textarea><br>
+    <button onclick="detectJavaScript()">ডিটেক্ট করুন</button>
+    <button onclick="beautifyCode()">বিউটিফাই করুন</button>
 
     <p id="encodingType"></p>
-    <p id="output"></p>
+    <pre id="output"></pre>
 
     <script>
-        function detectEncoding() {
-            let text = document.getElementById("inputText").value;
-            let detected = "Unknown Encoding";
+        function detectJavaScript() {
+            let code = document.getElementById("inputText").value;
+            let detected = "Unknown Type";
 
-            if (/^[A-Za-z0-9+/=]+$/.test(text) && text.length % 4 === 0) {
-                detected = "Base64 Encoding";
-            } else if (/%[0-9A-Fa-f]{2}/.test(text)) {
-                detected = "URL Encoding";
-            } else if (/^[a-zA-Z]+$/.test(text)) {
-                detected = "ROT13 Encoding (Possible)";
+            if (code.includes("document.") || code.includes("window.") || code.includes("fetch(")) {
+                detected = "JavaScript Code (Normal)";
+            } 
+            if (code.includes("eval(")) {
+                detected = "JavaScript (Possibly Obfuscated)";
+            }
+            if (code.includes("atob(") || code.includes("btoa(")) {
+                detected = "Base64 Encoding Found in JavaScript";
             }
 
-            document.getElementById("encodingType").innerText = "Detected Encoding: " + detected;
+            document.getElementById("encodingType").innerText = "Detected: " + detected;
         }
 
-        function decodeText() {
-            let text = document.getElementById("inputText").value;
-            let encodingType = document.getElementById("encodingType").innerText.split(": ")[1];
-            let output = "ডিকোড করতে পারছি না!";
-
-            try {
-                if (encodingType === "Base64 Encoding") {
-                    output = atob(text);
-                } else if (encodingType === "URL Encoding") {
-                    output = decodeURIComponent(text);
-                } else if (encodingType === "ROT13 Encoding (Possible)") {
-                    output = text.replace(/[a-zA-Z]/g, function (char) {
-                        return String.fromCharCode(
-                            char.charCodeAt(0) + (char.toLowerCase() < 'n' ? 13 : -13)
-                        );
-                    });
-                }
-            } catch (e) {
-                output = "ডিকোড করতে সমস্যা হচ্ছে!";
-            }
-
-            document.getElementById("output").innerText = "Decoded Text: " + output;
+        function beautifyCode() {
+            let code = document.getElementById("inputText").value;
+            let beautifiedCode = js_beautify(code, { indent_size: 4 });
+            document.getElementById("output").innerText = beautifiedCode;
         }
     </script>
 
