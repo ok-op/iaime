@@ -3,45 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generator</title>
+    <title>Encoding Detector & Decoder</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        textarea { width: 80%; height: 100px; margin-bottom: 10px; }
+        button { padding: 10px 15px; margin: 5px; }
+        #output { margin-top: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>AI Image Generator</h1>
-    </header>
+    <h2>Encoding Detector & Decoder</h2>
+    <textarea id="inputText" placeholder="এখানে এনকোডেড টেক্সট দিন..."></textarea><br>
+    <button onclick="detectEncoding()">ডিটেক্ট এনকোডিং</button>
+    <button onclick="decodeText()">ডিকোড করুন</button>
 
-    <div class="container">
-        <form id="image-form">
-            <label for="prompt">Enter your prompt:</label>
-            <input type="text" id="prompt" placeholder="e.g., A futuristic city at sunset" required>
-            
-            <button type="submit">Generate Image</button>
-        </form>
+    <p id="encodingType"></p>
+    <p id="output"></p>
 
-        <div id="loading" style="display: none;">
-            <p>Generating image...</p>
-        </div>
+    <script>
+        function detectEncoding() {
+            let text = document.getElementById("inputText").value;
+            let detected = "Unknown Encoding";
 
-        <div id="image-result" style="display: none;">
-            <h2>Generated Image:</h2>
-            <img id="res-centered-image" src="" alt="Generated AI Image">
-            <button id="download-btn">Download Image</button>
-        </div>
-    </div>
+            if (/^[A-Za-z0-9+/=]+$/.test(text) && text.length % 4 === 0) {
+                detected = "Base64 Encoding";
+            } else if (/%[0-9A-Fa-f]{2}/.test(text)) {
+                detected = "URL Encoding";
+            } else if (/^[a-zA-Z]+$/.test(text)) {
+                detected = "ROT13 Encoding (Possible)";
+            }
 
-    <script src="script.js"></script>
+            document.getElementById("encodingType").innerText = "Detected Encoding: " + detected;
+        }
+
+        function decodeText() {
+            let text = document.getElementById("inputText").value;
+            let encodingType = document.getElementById("encodingType").innerText.split(": ")[1];
+            let output = "ডিকোড করতে পারছি না!";
+
+            try {
+                if (encodingType === "Base64 Encoding") {
+                    output = atob(text);
+                } else if (encodingType === "URL Encoding") {
+                    output = decodeURIComponent(text);
+                } else if (encodingType === "ROT13 Encoding (Possible)") {
+                    output = text.replace(/[a-zA-Z]/g, function (char) {
+                        return String.fromCharCode(
+                            char.charCodeAt(0) + (char.toLowerCase() < 'n' ? 13 : -13)
+                        );
+                    });
+                }
+            } catch (e) {
+                output = "ডিকোড করতে সমস্যা হচ্ছে!";
+            }
+
+            document.getElementById("output").innerText = "Decoded Text: " + output;
+        }
+    </script>
 
 </body>
 </html>
