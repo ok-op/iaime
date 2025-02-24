@@ -19,7 +19,7 @@
             overflow: hidden;
         }
 
-        button {
+        .animated-button {
             padding: 10px 20px;
             font-size: 18px;
             cursor: pointer;
@@ -27,9 +27,15 @@
             background: #008CBA;
             color: white;
             border-radius: 5px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(236, 236, 237, 0.8);
+            animation: textAnimation 2s linear infinite;
+        }
+        /* টেক্সট অ্যানিমেশন */
+        @keyframes textAnimation {
+            0% { color: red; }
+            25% { color: blue; }
+            50% { color: green; }
+            75% { color: orange; }
+            100% { color: red; }
         }
 
         #frameContainer {
@@ -90,7 +96,7 @@
     </style>
 </head>
 <body>
-    <button onclick="loadEncodedHTML()">Load Encoded Page</button>
+    <button class="animated-button" onclick="loadEncodedHTML()">Load Encoded Page</button>
     
     <div id="frameContainer">
         <iframe id="outputFrame"></iframe>
