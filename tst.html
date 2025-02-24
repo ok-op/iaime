@@ -29,8 +29,11 @@
 
         #frameContainer {
             position: relative;
-            width: 90%;
-            height: 90vh;
+            width: 80%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         #outputFrame {
@@ -49,22 +52,22 @@
             100% { border-color: red; }
         }
 
-        /* 🦋 প্রজাপতির জন্য স্টাইল */
+        /* 🦋 প্রজাপতির GIF */
         .butterfly {
             position: absolute;
-            font-size: 30px;
-            opacity: 1;
-            animation: flyUp 3s linear infinite;
+            width: 50px;
+            height: 50px;
+            animation: flyUp 4s linear infinite;
         }
 
         .butterfly.left {
-            left: -50px;
+            left: -60px; /* সমান দূরত্ব */
             animation-delay: 0s;
         }
 
         .butterfly.right {
-            right: -50px;
-            animation-delay: 1.5s;
+            right: -60px; /* সমান দূরত্ব */
+            animation-delay: 2s;
         }
 
         @keyframes flyUp {
@@ -76,11 +79,11 @@
 <body>
     <button onclick="loadEncodedHTML()">Load Encoded Page</button>
     
-    <!-- আইফ্রেম ও প্রজাপতি -->
+    <!-- আইফ্রেম ও প্রজাপতির GIF -->
     <div id="frameContainer">
         <iframe id="outputFrame"></iframe>
-        <div class="butterfly left">🦋</div>
-        <div class="butterfly right">🦋</div>
+        <img src="https://i.gifer.com/7efs.gif" class="butterfly left" alt="Butterfly">
+        <img src="https://i.gifer.com/7efs.gif" class="butterfly right" alt="Butterfly">
     </div>
 
     <script>
