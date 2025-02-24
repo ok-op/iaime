@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eval(unescape) Encoder/Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        textarea {
+            width: 90%;
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .copy-btn {
+            background-color: #28a745;
+        }
+        .copy-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>eval(unescape) Encoder/Decoder</h2>
+
+    <textarea id="inputCode" placeholder="এখানে আপনার JavaScript কোড লিখুন..."></textarea>
+    
+    <br>
+    <button onclick="encodeScript()">🔒 Encode</button>
+    <button onclick="decodeScript()">🔓 Decode</button>
+    <button class="copy-btn" onclick="copyToClipboard()">📋 Copy</button>
+
+    <h3>Encoded/Decoded Output:</h3>
+    <textarea id="outputCode" readonly placeholder="এখানে আউটপুট দেখানো হবে..."></textarea>
+
+    <script>
+        function encodeScript() {
+            let inputText = document.getElementById("inputCode").value;
+            let encodedText = escape(inputText);
+            document.getElementById("outputCode").value = "eval(unescape('" + encodedText + "'));";
+        }
+
+        function decodeScript() {
+            let encodedText = document.getElementById("outputCode").value;
+            let decodedText = encodedText.replace(/evalunescape'(.*)';/, '$1');
+            document.getElementById("inputCode").value = unescape(decodedText);
+        }
+
+        function copyToClipboard() {
+            let outputText = document.getElementById("outputCode");
+            outputText.select();
+            document.execCommand("copy");
+            alert("Encoded text copied!");
+        }
+    </script>
+
+</body>
+</html>
