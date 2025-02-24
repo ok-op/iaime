@@ -57,22 +57,23 @@
     position: fixed; /* পুরো স্ক্রিনে উড়বে */
     width: 50px;
     height: auto;
-    animation: flyUp 5s linear infinite;
+    animation: flyUp 6s linear infinite;
+    z-index: -1; /* ব্যাকগ্রাউন্ডের নিচে রাখবে */
 }
 
 /* বাম পাশের প্রজাপতির অবস্থান */
-.butterfly.left-1 { left: 5%; bottom: -10%; animation-delay: 0s; }
-.butterfly.left-2 { left: 10%; bottom: -15%; animation-delay: 1s; }
-.butterfly.left-3 { left: 15%; bottom: -20%; animation-delay: 2s; }
+.butterfly.left-1 { left: 5%; bottom: -100px; animation-delay: 0s; }
+.butterfly.left-2 { left: 10%; bottom: -100px; animation-delay: 1s; }
+.butterfly.left-3 { left: 15%; bottom: -100px; animation-delay: 2s; }
 
 /* ডান পাশের প্রজাপতির অবস্থান */
-.butterfly.right-1 { right: 5%; bottom: -10%; animation-delay: 0.5s; }
-.butterfly.right-2 { right: 10%; bottom: -15%; animation-delay: 1.5s; }
-.butterfly.right-3 { right: 15%; bottom: -20%; animation-delay: 2.5s; }
+.butterfly.right-1 { right: 5%; bottom: -100px; animation-delay: 0.5s; }
+.butterfly.right-2 { right: 10%; bottom: -100px; animation-delay: 1.5s; }
+.butterfly.right-3 { right: 15%; bottom: -100px; animation-delay: 2.5s; }
 
 @keyframes flyUp {
     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+    100% { transform: translateY(-200vh) rotate(30deg); opacity: 0; }
 }
     </style>
 </head>
