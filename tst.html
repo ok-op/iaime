@@ -72,9 +72,17 @@
             text-decoration: underline;
         }
         .footer__copyright {
-            font-size: 14px;
+            font-size: 15px; /* ফন্ট সাইজ */
+            font-weight: bold; /* টেক্সট মোটা করা */
             margin-top: 5px;
-            color: orange;
+            animation: footer__copyrightAnimation 2s linear infinite;
+        }
+        @keyframes footer__copyrightAnimation {
+            0% { color: red; }
+            25% { color: blue; }
+            50% { color: green; }
+            75% { color: orange; }
+            100% { color: red; }
         }
     </style>
 </head>
