@@ -57,7 +57,7 @@
     <script>
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
-            let encodedText = escape(inputText);
+            let encodedText = escape(inputText);  // JavaScript কোড এনকোড করা হচ্ছে
             document.getElementById("outputCode").value = `eval(unescape('${encodedText}'));`;
         }
 
@@ -67,10 +67,10 @@
             // `eval(unescape('...'));` এর ভিতরের অংশ বের করা
             let match = encodedText.match(/evalunescape'(.+)';/);
             if (match && match[1]) {
-                let decodedText = unescape(match[1]);
+                let decodedText = unescape(match[1]); // এনকোডেড অংশ আনএনকোড করা হচ্ছে
                 document.getElementById("inputCode").value = decodedText;
             } else {
-                alert("Invalid encoded format!");
+                alert("Invalid encoded format!"); // ভুল ফরম্যাট হলে অ্যালার্ট দেখানো হবে
             }
         }
 
