@@ -57,20 +57,21 @@
     <script>
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
-            let encodedText = escape(inputText);
+            let encodedText = escape(inputText); // এনকোড করা
             document.getElementById("outputCode").value = `eval(unescape('${encodedText}'));`;
         }
 
         function decodeScript() {
             let encodedText = document.getElementById("outputCode").value;
-            
-            // সঠিক regex দিয়ে eval(unescape('...')) অংশ থেকে শুধু এনকোডেড অংশ বের করা
+
+            // eval(unescape('...')) ফরম্যাট থেকে শুধুমাত্র এনকোডেড অংশ বের করা
             let match = encodedText.match(/evalunescape'(.+)';/);
-            
+
             if (match && match[1]) {
-                document.getElementById("inputCode").value = unescape(match[1]);
+                let decodedText = unescape(match[1]);
+                document.getElementById("inputCode").value = decodedText;
             } else {
-                alert("Invalid encoded text!");
+                alert("Invalid encoded text!"); // যদি ভুল ফরম্যাট থাকে
             }
         }
 
