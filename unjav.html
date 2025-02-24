@@ -69,7 +69,7 @@
             let encodedText = document.getElementById("outputCode").value;
 
             // eval(unescape("...")); ফরম্যাট থেকে কন্টেন্ট বের করা
-            let match = encodedText.match(/evalunescape"(.+)";/);
+            let match = encodedText.match(/eval\(unescape\("(.+)"\)\);/);
 
             if (match && match[1]) {
                 let decodedText = decodeURIComponent(match[1]); // ডিকোড করা হচ্ছে
