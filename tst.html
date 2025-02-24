@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AI Image Generator</h1>
+    </header>
+
+    <div class="container">
+        <form id="image-form">
+            <label for="prompt">Enter your prompt:</label>
+            <input type="text" id="prompt" placeholder="e.g., A futuristic city at sunset" required>
+            
+            <button type="submit">Generate Image</button>
+        </form>
+
+        <div id="loading" style="display: none;">
+            <p>Generating image...</p>
+        </div>
+
+        <div id="image-result" style="display: none;">
+            <h2>Generated Image:</h2>
+            <img id="res-centered-image" src="" alt="Generated AI Image">
+            <button id="download-btn">Download Image</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
