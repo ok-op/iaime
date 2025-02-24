@@ -5,17 +5,31 @@
     <title>Base64 JavaScript Load Test</title>
 </head>
 <body>
-    <h1 id="status">Ok স্ক্রিপ্ট লোড হচ্ছে...</h1>
+    <h2 id="status">স্ক্রিপ্ট লোড হচ্ছে...</h2> <!-- এখানে স্ক্রিপ্টের স্ট্যাটাস দেখানো হবে -->
 
     <script>
         // Base64 এনকোড করা JavaScript কোড
         const encodedScript = "ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3N0YXR1cycpLmlubmVySFRNTCA9ICfmiqTmir7ml6XkvJrmjIHliqDkuKrlj4rlm77mgKfvvIEnOw==";
 
-        // Base64 ডিকোড করে রান করানো
-        const decodedScript = atob(encodedScript);
+        // ফাংশন: Base64 ডিকোড করে রান করানো
+        function decodeAndRunScript(encodedStr) {
+            try {
+                const decodedScript = atob(encodedStr); // Base64 থেকে ডিকোড
+                const scriptElement = document.createElement("script");
+                scriptElement.textContent = decodedScript; // ডিকোড করা JS সেট
+                document.body.appendChild(scriptElement); // HTML-এ যোগ করো
+                document.getElementById('status').innerHTML = "✅ স্ক্রিপ্ট সফলভাবে লোড হয়েছে!";
+                console.log("✅ Script Loaded Successfully!");
+            } catch (error) {
+                console.error("❌ ডিকোডিং তে সমস্যা:", error);
+                document.getElementById('status').innerHTML = "❌ স্ক্রিপ্ট লোড করতে সমস্যা হয়েছে!";
+            }
+        }
 
-        // স্ক্রিপ্ট রান করানো
-        new Function(decodedScript)();
+        // পেজ লোড হলে রান করাও
+        window.onload = function () {
+            decodeAndRunScript(encodedScript);
+        };
     </script>
 </body>
 </html>
