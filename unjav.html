@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eval(unescape) Encoder/Decoder</title>
+    <title>Full Code Encoder/Decoder</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
         }
         textarea {
             width: 90%;
-            height: 150px;
+            height: 200px;
             margin: 10px 0;
             padding: 10px;
             font-size: 16px;
@@ -42,9 +42,9 @@
 </head>
 <body>
 
-    <h2>eval(unescape) Encoder/Decoder</h2>
+    <h2>🔐 Full Code Encoder/Decoder</h2>
 
-    <textarea id="inputCode" placeholder="এখানে আপনার JavaScript কোড লিখুন..."></textarea>
+    <textarea id="inputCode" placeholder="এখানে আপনার সম্পূর্ণ কোড লিখুন..."></textarea>
     
     <br>
     <button onclick="encodeScript()">🔒 Encode</button>
@@ -57,17 +57,20 @@
     <script>
         function encodeScript() {
             let inputText = document.getElementById("inputCode").value;
-            let encodedText = escape(inputText);  // JavaScript কোড এনকোড করা হচ্ছে
-            document.getElementById("outputCode").value = `eval(unescape('${encodedText}'));`;
+
+            // পুরো HTML, CSS, JS কোড এনকোড করা হচ্ছে
+            let encodedText = btoa(unescape(encodeURIComponent(inputText)));
+
+            document.getElementById("outputCode").value = `eval(unescape(decodeURIComponent(atob('${encodedText}'))));`;
         }
 
         function decodeScript() {
             let encodedText = document.getElementById("outputCode").value;
 
-            // `eval(unescape('...'));` এর ভিতরের অংশ বের করা
-            let match = encodedText.match(/evalunescape'(.+)';/);
+            // `eval(unescape(decodeURIComponent(atob('...'))));` এর ভিতরের অংশ বের করা
+            let match = encodedText.match(/evalunescapedecodeURIComponentatob'(.+)';/);
             if (match && match[1]) {
-                let decodedText = unescape(match[1]); // এনকোডেড অংশ আনএনকোড করা হচ্ছে
+                let decodedText = decodeURIComponent(escape(atob(match[1]))); // এনকোডেড অংশ আনএনকোড করা হচ্ছে
                 document.getElementById("inputCode").value = decodedText;
             } else {
                 alert("Invalid encoded format!"); // ভুল ফরম্যাট হলে অ্যালার্ট দেখানো হবে
