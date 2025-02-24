@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Encoding Detector & Beautifier</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify.min.js"></script>
+    <title>JavaScript Obfuscator Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/javascript-obfuscator/2.20.0/index.browser.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
         textarea { width: 80%; height: 150px; margin-bottom: 10px; font-family: monospace; }
-        button { padding: 10px 15px; margin: 5px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
         #output { white-space: pre-wrap; text-align: left; background: #f4f4f4; padding: 10px; width: 80%; margin: 0 auto; }
     </style>
 </head>
 <body>
 
-    <h2>JavaScript Code Detector & Beautifier</h2>
-    <textarea id="inputText" placeholder="এখানে JavaScript কোড পেস্ট করুন..."></textarea><br>
-    <button onclick="detectJavaScript()">ডিটেক্ট করুন</button>
-    <button onclick="beautifyCode()">বিউটিফাই করুন</button>
+    <h2>JavaScript Obfuscator Tool</h2>
+    <textarea id="inputCode" placeholder="এখানে আপনার JavaScript কোড লিখুন..."></textarea><br>
+    <button onclick="obfuscateCode()">অবস্কিউর করুন</button>
+    <button onclick="copyToClipboard()">কপি করুন</button>
 
-    <p id="encodingType"></p>
+    <h3>Obfuscated Code:</h3>
     <pre id="output"></pre>
 
     <script>
-        function detectJavaScript() {
-            let code = document.getElementById("inputText").value;
-            let detected = "Unknown Type";
+        function obfuscateCode() {
+            let inputCode = document.getElementById("inputCode").value;
+            let obfuscatedCode = JavaScriptObfuscator.obfuscate(inputCode, {
+                compact: true, // কোড ছোট করে দেয়
+                controlFlowFlattening: true, // কোডের লজিক আরও জটিল করে
+                controlFlowFlatteningThreshold: 1,
+                numbersToExpressions: true,
+                stringArrayEncoding: ['base64'],
+                stringArrayThreshold: 1
+            });
 
-            if (code.includes("document.") || code.includes("window.") || code.includes("fetch(")) {
-                detected = "JavaScript Code (Normal)";
-            } 
-            if (code.includes("eval(")) {
-                detected = "JavaScript (Possibly Obfuscated)";
-            }
-            if (code.includes("atob(") || code.includes("btoa(")) {
-                detected = "Base64 Encoding Found in JavaScript";
-            }
-
-            document.getElementById("encodingType").innerText = "Detected: " + detected;
+            document.getElementById("output").innerText = obfuscatedCode.getObfuscatedCode();
         }
 
-        function beautifyCode() {
-            let code = document.getElementById("inputText").value;
-            let beautifiedCode = js_beautify(code, { indent_size: 4 });
-            document.getElementById("output").innerText = beautifiedCode;
+        function copyToClipboard() {
+            let outputText = document.getElementById("output").innerText;
+            navigator.clipboard.writeText(outputText);
+            alert("কপি করা হয়েছে!");
         }
     </script>
 
