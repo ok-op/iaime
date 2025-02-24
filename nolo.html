@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Encoder</title>
+</head>
+<body>
+
+    <h2>JavaScript Encoder</h2>
+    <textarea id="inputCode" placeholder="এখানে আপনার JavaScript কোড লিখুন..." rows="5" cols="50"></textarea><br>
+    <button onclick="encodeCode()">Encode করুন</button>
+    
+    <h3>Encoded কোড:</h3>
+    <textarea id="encodedOutput" rows="5" cols="50" readonly></textarea><br>
+
+    <h3>Generated HTML:</h3>
+    <textarea id="htmlOutput" rows="10" cols="50" readonly></textarea><br>
+    <button onclick="downloadHTML()">Download HTML</button>
+
+    <script>
+        function encodeCode() {
+            let code = document.getElementById("inputCode").value;
+            let encoded = escape(code); // কোড Encode করা হচ্ছে
+            
+            let htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <title>Encoded JavaScript</title>
+</head>
+<body>
+    <script>
+        eval(unescape('${encoded}'));
+    </script>
+    <noscript>JavaScript Required!</noscript>
+</body>
+</html>`;
+
+            document.getElementById("encodedOutput").value = encoded;
+            document.getElementById("htmlOutput").value = htmlContent;
+        }
+
+        function downloadHTML() {
+            let htmlData = document.getElementById("htmlOutput").value;
+            let blob = new Blob([htmlData], { type: "text/html" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "encoded_page.html";
+            link.click();
+        }
+    </script>
+
+</body>
+</html>
