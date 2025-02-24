@@ -52,48 +52,43 @@
             100% { border-color: red; }
         }
 
-        .butterfly-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* যেন ইউজার ক্লিক না করতে পারে */
-}
+        /* 🦋 প্রজাপতির এনিমেশন */
+        .butterfly {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            animation: flyUp 5s linear infinite;
+        }
 
-.butterfly {
-    position: absolute;
-    width: 50px; /* ইমেজের সাইজ */
-    height: auto;
-    animation: flyUpAnimation 5s linear infinite;
-}
+        /* বাম পাশের প্রজাপতির অবস্থান */
+        .butterfly.left-1 { left: 5%; bottom: -10%; animation-delay: 0s; }
+        .butterfly.left-2 { left: 10%; bottom: -15%; animation-delay: 1s; }
+        .butterfly.left-3 { left: 15%; bottom: -20%; animation-delay: 2s; }
 
-/* বাম পাশের প্রজাপতিগুলো */
-.butterfly.left-1 { bottom: -10%; left: 5%; animation-delay: 0s; }
-.butterfly.left-2 { bottom: -20%; left: 8%; animation-delay: 1s; }
-.butterfly.left-3 { bottom: -30%; left: 6%; animation-delay: 2s; }
+        /* ডান পাশের প্রজাপতির অবস্থান */
+        .butterfly.right-1 { right: 5%; bottom: -10%; animation-delay: 0.5s; }
+        .butterfly.right-2 { right: 10%; bottom: -15%; animation-delay: 1.5s; }
+        .butterfly.right-3 { right: 15%; bottom: -20%; animation-delay: 2.5s; }
 
-/* ডান পাশের প্রজাপতিগুলো */
-.butterfly.right-1 { bottom: -15%; right: 5%; animation-delay: 0.5s; }
-.butterfly.right-2 { bottom: -25%; right: 8%; animation-delay: 1.5s; }
-.butterfly.right-3 { bottom: -35%; right: 6%; animation-delay: 2.5s; }
-
-/* প্রজাপতিগুলো ধীরে ধীরে উপর দিকে উঠবে */
-@keyframes flyUpAnimation {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
-}
+        @keyframes flyUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
     <button onclick="loadEncodedHTML()">Load Encoded Page</button>
     
-    <!-- আইফ্রেম ও প্রজাপতির GIF -->
-    <div class="butterfly-container">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-1">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-2">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-3">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-1">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-2">
-    <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-3">
+    <div id="frameContainer">
+        <iframe id="outputFrame"></iframe>
+        
+        <!-- 🦋 প্রজাপতির GIF -->
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-1">
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-2">
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly left-3">
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-1">
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-2">
+        <img src="https://i.gifer.com/3Thp.gif" class="butterfly right-3">
     </div>
 
     <script>
