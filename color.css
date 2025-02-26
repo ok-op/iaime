@@ -14,12 +14,19 @@ body {
 /* হেডারের স্টাইল */
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;  /* নাম ও বাটন মাঝখানে আনবে */
     align-items: center;
     padding: 12px 20px;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* নাম ও বাটন একই লাইনে রাখার জন্য নতুন ক্লাস */
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;  /* নাম ও বাটনের মধ্যে গ্যাপ রাখবে */
 }
 
 /* টাইটেল (নাম ছোট এবং বোল্ড) */
@@ -33,7 +40,7 @@ body {
     text-decoration: none;
     background: linear-gradient(145deg, #ffffff, #e3e3e3);
     color: #6a11cb;
-    padding: 12px 20px;
+    padding: 10px 18px;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 8px;
