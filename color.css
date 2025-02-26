@@ -121,10 +121,6 @@ body {
     .color .hex-value {
         font-size: 1.05rem;
     }
-    .refresh-btn {
-        font-size: 1rem;
-    }
-}
 
 /* চ্যানেলের বাটন (slim & compact) */
 .refresh-btn {
