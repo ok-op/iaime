@@ -44,7 +44,7 @@ body {
     font-size: 0.85rem; /* ফন্ট ছোট করা হয়েছে */
     font-weight: 600;
     border-radius: 5px;
-    box-shadow: 2px 2px 4px #20082C, -2px -2px 4px #ffffff;
+    box-shadow: 2px 2px 4px #20082C, -2px -2px 4px #20082C;
     transition: all 0.3s ease;
     border: none;
     display: inline-block;
